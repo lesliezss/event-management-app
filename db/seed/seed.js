@@ -6,7 +6,7 @@ const query = promisify(db.query).bind(db);
 
 const seed = async () => {
   try {
-    // Drop existing tables in the correct order
+    // Drop existing tables in order
     await query(`DROP TABLE IF EXISTS event_participants;`);
     await query(`DROP TABLE IF EXISTS participants;`);
     await query(`DROP TABLE IF EXISTS events;`);
