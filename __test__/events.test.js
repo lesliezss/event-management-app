@@ -27,9 +27,29 @@ POST	/api/whitelist	Add an IP to the whitelist
 const app = require("../app");
 const request = require("supertest");
 const db = require("../db/connection");
-const seed = require("../db/seeds/seed");
+const seed = require("../db/seed/seed");
 
 
 beforeEach(() => seed());
 
 afterAll(() => db.end());
+
+describe("GET /api/events", () => {
+    test("200 GET: response with an array of all events", () => {
+      return request(app)
+        .get("/api/events")
+        .expect(200)
+        .then(({ body }) => {
+          const {events} = body;
+          expect(events.length).toBe(3);
+          events.forEach((event) => {
+            expect(event).toMatchObject({
+              event_name: expect.any(String),
+              event_date: expect.any(String),
+              location_name: expect.any(String),
+              guest_number: expect.any(Number)
+            });
+          });
+        });
+    })
+})
