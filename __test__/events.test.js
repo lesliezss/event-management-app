@@ -2,6 +2,7 @@
 events
 GET	/api/events	List all events
 GET /api/events/search' search by event name
+
 POST	/api/events	Create a new event
 DELETE	/api/events/:id	Delete a specific event
 GET	/api/events/:id	Get details of a specific event
