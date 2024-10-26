@@ -57,7 +57,7 @@ describe("GET /api/events", () => {
 describe("GET /api/events/search", () => {
   test("200 GET: response with an array of matching events", () => {
     return request(app)
-      .get("/api/events/search?name=Tech") 
+      .get("/api/events/search?name=Tech")
       .expect(200)
       .then(({ body }) => {
         const { events } = body;
@@ -75,10 +75,10 @@ describe("GET /api/events/search", () => {
 
   test("404 GET: no events found", () => {
     return request(app)
-      .get("/api/events/search?name=NonExistingEvent") 
+      .get("/api/events/search?name=NonExistingEvent")
       .expect(404)
       .then(({ body }) => {
-        expect(body).toEqual({ msg: "No events found" }); 
+        expect(body).toEqual({ msg: "No events found" });
       });
   });
 
@@ -89,6 +89,86 @@ describe("GET /api/events/search", () => {
       .then(({ body }) => {
         expect(body).toEqual({
           msg: "Please provide an event name to search.",
+        });
+      });
+  });
+});
+
+describe("POST /api/events", () => {
+  test("201 POST: add an event, response with the posted event", () => {
+    const newEvent = {
+      event_name: "New Event",
+      event_date: "2025-01-01",
+      location_id: 1,
+    };
+    return request(app)
+      .post("/api/events")
+      .send(newEvent)
+      .expect(201)
+      .then(({ body }) => {
+        const { newEvent } = body;
+        expect(newEvent).toMatchObject({
+          event_id: expect.any(Number),
+          event_name: "New Event",
+          event_date: "2025-01-01T00:00:00.000Z",
+          location_id: 1,
+        });
+      });
+  });
+  test("status 400: responds with an error message when fileds are not filled", () => {
+    const newEvent = {
+      event_name: "New Event",
+      event_date: "2025-01-01",
+    };
+    return request(app)
+      .post("/api/events")
+      .send(newEvent)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("All fields are required");
+      });
+  });
+  test("status 404: responds with an error message when locatin_id is invalid", () => {
+    const newEvent = {
+      event_name: "New Event",
+      event_date: "2025-01-01",
+      location_id: 999,
+    };
+    return request(app)
+      .post("/api/events")
+      .send(newEvent)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Location not found");
+      });
+  });
+  test("status 400: should respond with an error if the event_date is invalid", () => {
+    return request(app)
+      .post("/api/events")
+      .send({
+        event_name: "New Event",
+        event_date: "2026-01", // An invalid date format
+        location_id: 1,
+      })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body).toEqual({
+          msg: "Invalid date format",
+        });
+      });
+  });
+  test("status 400: should respond with an error if the event_date is in the past", () => {
+    return request(app)
+      .post("/api/events")
+      .send({
+        event_name: "Past Event",
+        event_date: "2022-01-01", // A date in the past
+        location_id: 1,
+      })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body).toEqual({
+          msg: "Event date cannot be in the past",
         });
       });
   });

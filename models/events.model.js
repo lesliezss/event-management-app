@@ -43,4 +43,19 @@ function searchEventsByName(name) {
     });
 }
 
-module.exports = { selectAllEvents, searchEventsByName };
+function postNewEvent(event_name, event_date, location_id) {
+  return db
+    .query(
+      `INSERT INTO events (event_name, event_date, location_id)
+       VALUES (?, ?, ?)
+       RETURNING *`,
+      [event_name, event_date, location_id]
+    )
+    .then(([result]) => {
+      return result[0];
+    })
+}
+
+
+
+module.exports = { selectAllEvents, searchEventsByName, postNewEvent };

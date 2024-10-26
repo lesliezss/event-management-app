@@ -22,7 +22,7 @@ const seed = () => {
       })
       .then(() => {
         return db.query(`CREATE TABLE events (
-                event_id INT PRIMARY KEY,
+                event_id INT AUTO_INCREMENT PRIMARY KEY,
                 event_name VARCHAR(255) NOT NULL,
                 event_date DATE NOT NULL,
                 location_id INT,
@@ -60,8 +60,8 @@ const seed = () => {
       .then(() => {
         return db.query(
           ` INSERT INTO events (event_id, event_name, event_date, location_id) VALUES
-                 (1, 'Tech meeting', '2024-10-20', 1),
-                 (2, 'Music festival', '2024-11-15', 1),
+                 (1, 'Tech meeting', '2024-12-20', 1),
+                 (2, 'Music festival', '2025-01-15', 1),
                  (3, 'Art Sales', '2024-12-01', 2);`
         );
       })

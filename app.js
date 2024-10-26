@@ -3,6 +3,7 @@ const express = require("express");
 const {
   getAllEvents,
   getEventsByName,
+  postNewEventController,
 } = require("./controllers/evets.controller");
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.get("/api/events", getAllEvents);
 app.get("/api/events/search", getEventsByName);
+app.post("/api/events", postNewEventController);
 
 //psql errors
 app.use((err, req, res, next) => {
