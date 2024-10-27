@@ -53,9 +53,20 @@ function postNewEvent(event_name, event_date, location_id) {
     )
     .then(([result]) => {
       return result[0];
-    })
+    });
 }
 
+function deleteEventByIdModel(event_id) {
+  return db
+    .query(`DELETE FROM events WHERE event_id = ?`, [event_id])
+    .then(([result]) => {
+      return result;
+    });
+}
 
-
-module.exports = { selectAllEvents, searchEventsByName, postNewEvent };
+module.exports = {
+  selectAllEvents,
+  searchEventsByName,
+  postNewEvent,
+  deleteEventByIdModel,
+};

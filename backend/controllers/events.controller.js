@@ -2,6 +2,7 @@ const {
   selectAllEvents,
   searchEventsByName,
   postNewEvent,
+  deleteEventByIdModel
 } = require("../models/events.model");
 const dayjs = require("dayjs");
 const db = require("../db/connection");
@@ -71,6 +72,28 @@ exports.postNewEventController = (req, res, next) => {
     .then((newEvent) => {
       if (newEvent) {
         res.status(201).send({ newEvent });
+      }
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.deleteEventByIdController = (req, res, next) => {
+  const { event_id } = req.params;
+  if (isNaN(event_id) || !Number.isInteger(Number(event_id))) {
+    return res.status(400).json({ msg: "Invalid ID format" });
+  }
+  return deleteEventByIdModel(event_id)
+    .then((result) => {
+      if (result.affectedRows === 0) {
+        return Promise.reject({
+          status: 404,
+          msg: `No event found with id: ${event_id}`,
+        });
+      }
+      if(result) {
+        res.status(204).send();
       }
     })
     .catch((err) => {

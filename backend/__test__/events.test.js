@@ -3,9 +3,8 @@ events
 GET	/api/events	List all events
 GET /api/events/search' search by event name
 POST	/api/events	Create a new event
-
 DELETE	/api/events/:id	Delete a specific event
-GET	/api/events/:id	Get details of a specific event
+
 
 locations
 GET	/api/locations	List all locations
@@ -173,3 +172,26 @@ describe("POST /api/events", () => {
       });
   });
 });
+
+describe.only("DELETE /api/events/event_id", () => {
+  test("204 DELETE: delete an existing event by event_id", () => {
+    return request(app).delete("/api/events/1").expect(204);
+  });
+  test("status 400: responds with an error when given an invalid id", () => {
+    return request(app)
+      .delete("/api/events/notAnId")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Invalid ID format");
+      });
+  });
+  test("status 404: responds with an error when given a climb_id that's not in the database", () => {
+    return request(app)
+      .delete("/api/events/999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("No event found with id: 999");
+      });
+  });
+});
+
