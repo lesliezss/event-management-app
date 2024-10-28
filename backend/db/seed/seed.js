@@ -53,15 +53,16 @@ const seed = () => {
       .then(() => {
         return db.query(
           `INSERT INTO locations (location_id, location_name, capacity) VALUES
-                (1, 'Meeting Room 1', 15),
-                (2, 'Meeting Room 2', 20);`
+                (1, 'Meeting Room 1', 8),
+                (2, 'Meeting Room 2', 15),
+                (3, 'Activity Centre', 20)`
         );
       })
       .then(() => {
         return db.query(
           ` INSERT INTO events (event_id, event_name, event_date, location_id) VALUES
                  (1, 'Tech meeting', '2024-12-20', 1),
-                 (2, 'Music festival', '2025-01-15', 1),
+                 (2, 'Music festival', '2025-01-15', 3),
                  (3, 'Art Sales', '2024-12-01', 2);`
         );
       })
@@ -71,7 +72,9 @@ const seed = () => {
                 (1, 'John Doe', 'john@example.com'),
                 (2, 'Jane Smith', 'jane@example.com'),
                 (3, 'Alice Johnson', 'alice@example.com'),
-                (4, 'Bob Brown', 'bob@example.com');`
+                (4, 'Bob Brown', 'bob@example.com'),
+                (5, 'Leslie Zhan', 'lesliezhan@example.com'),
+                (6, 'abc def', 'abcdef@example.com')`
         );
       })
       .then(() => {
@@ -79,7 +82,10 @@ const seed = () => {
                 (1, 1),
                 (1, 2),
                 (2, 3),
-                (3, 4);`);
+                (3, 4),
+                (1, 5),
+                (1, 6),
+                (1, 3)`);
       })
       .catch((err) => {
         console.error(err, "<<--seeding error");

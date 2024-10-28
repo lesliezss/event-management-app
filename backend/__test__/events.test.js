@@ -173,7 +173,7 @@ describe("POST /api/events", () => {
   });
 });
 
-describe.only("DELETE /api/events/event_id", () => {
+describe("DELETE /api/events/event_id", () => {
   test("204 DELETE: delete an existing event by event_id", () => {
     return request(app).delete("/api/events/1").expect(204);
   });
