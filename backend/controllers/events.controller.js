@@ -2,7 +2,7 @@ const {
   selectAllEvents,
   searchEventsByName,
   postNewEvent,
-  deleteEventByIdModel
+  deleteEventByIdModel,
 } = require("../models/events.model");
 const dayjs = require("dayjs");
 const db = require("../db/connection");
@@ -66,11 +66,11 @@ exports.postNewEventController = (req, res, next) => {
       if (locationCheck[0].length === 0) {
         return res.status(404).json({ msg: "Location not found" });
       }
-
       return postNewEvent(event_name, event_date, location_id);
     })
     .then((newEvent) => {
       if (newEvent) {
+        console.log(newEvent)
         res.status(201).send({ newEvent });
       }
     })
@@ -92,7 +92,7 @@ exports.deleteEventByIdController = (req, res, next) => {
           msg: `No event found with id: ${event_id}`,
         });
       }
-      if(result) {
+      if (result) {
         res.status(204).send();
       }
     })

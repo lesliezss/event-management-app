@@ -46,12 +46,17 @@ function searchEventsByName(name) {
 function postNewEvent(event_name, event_date, location_id) {
   return db
     .query(
-      `INSERT INTO events (event_name, event_date, location_id)
-       VALUES (?, ?, ?)`,
+      `INSERT INTO events (event_name, event_date, location_id) VALUES (?, ?, ?)`,
       [event_name, event_date, location_id]
     )
     .then(([result]) => {
-      return result[0];
+      const newEventId = result.insertId; // Get the inserted event's ID
+      
+      // select the full row from the events table based on the insertId
+      return db.query(`SELECT * FROM events WHERE event_id = ?`, [newEventId]);
+    })
+    .then(([rows]) => {
+      return rows[0]; // Return the full inserted event row
     });
 }
 

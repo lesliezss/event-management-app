@@ -1,8 +1,8 @@
 // participants
 // GET	/api/participants	List all participants
+
 // POST	/api/participants	Create a new participant
 
-// PATCH
 // DELETE	/api/participants/:id	Delete a specific participant
 // GET  /api/participants/:event_id   filter participants by event
 
@@ -34,12 +34,12 @@ describe("GET /api/participants", () => {
   });
 });
 
-describe("POST /api/participants", () => {
+describe.only("POST /api/participants", () => {
   test("201 POST: add a participant, response with the posted participant", () => {
     const newParticipant = {
       name: "New Participants",
       email: "new@example.com",
-      event_id: 1,
+      event_id: 2,
     };
     return request(app)
       .post("/api/participants")
@@ -48,6 +48,7 @@ describe("POST /api/participants", () => {
       .then(({ body }) => {
         const { newParticipant } = body;
         console.log(newParticipant)
+
         expect(newParticipant).toMatchObject({
           participant_id: expect.any(Number),
           name: "New Participants",

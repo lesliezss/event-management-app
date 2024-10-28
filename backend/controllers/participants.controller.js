@@ -2,6 +2,7 @@ const {
   selectAllParticipants,
   postNewParticipantModel,
 } = require("../models/participants.model");
+const db = require("../db/connection");
 
 exports.getAllParticipants = (req, res, next) => {
   selectAllParticipants()
@@ -25,13 +26,12 @@ exports.postNewParticipantController = (req, res, next) => {
   if (!name || !email || !event_id) {
     return res.status(400).send({ msg: "All fields are required" });
   }
-  console.log("Checking event with ID:", event_id); // Log event_id being checked
+  // console.log("Checking event with ID:", event_id); // Log event_id being checked
 
   db.query(`SELECT * FROM events WHERE event_id = ?`, [event_id])
     .then((eventCheck) => {
       //event check
-      console.log(eventCheck);
-      if (eventCheck.length === 0) {
+      if (!eventCheck || eventCheck.length === 0) {
         return res.status(404).json({ msg: "Event not found" });
       }
       return postNewParticipantModel(name, email, event_id);
@@ -42,8 +42,6 @@ exports.postNewParticipantController = (req, res, next) => {
       }
     })
     .catch((err) => {
-      console.error("Error in postNewParticipantController:", err); // Log the error for debugging
-
       next(err);
     });
 };
