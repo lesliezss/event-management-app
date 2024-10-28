@@ -32,7 +32,7 @@ const seed = () => {
       .then(() => {
         return db.query(
           `CREATE TABLE participants (
-                    participant_id INT PRIMARY KEY,
+                    participant_id INT AUTO_INCREMENT PRIMARY KEY,
                     name VARCHAR(255) NOT NULL,
                     email VARCHAR(255) NOT NULL UNIQUE
                 );`

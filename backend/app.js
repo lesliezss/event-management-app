@@ -7,6 +7,10 @@ const {
   deleteEventByIdController,
 } = require("./controllers/events.controller");
 const { getAllLocations } = require("./controllers/location.controller");
+const {
+  getAllParticipants,
+  postNewParticipantController,
+} = require("./controllers/participants.controller");
 
 const app = express();
 
@@ -22,6 +26,11 @@ app.delete("/api/events/:event_id", deleteEventByIdController);
 // locations endpoints
 
 app.get("/api/locations", getAllLocations);
+
+// participants endpoints
+
+app.get("/api/participants", getAllParticipants);
+app.post("/api/participants", postNewParticipantController);
 
 //mysql errors
 app.use((err, req, res, next) => {

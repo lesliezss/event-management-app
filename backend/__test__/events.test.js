@@ -5,7 +5,6 @@ GET /api/events/search' search by event name
 POST	/api/events	Create a new event
 DELETE	/api/events/:id	Delete a specific event
 
-
 locations
 GET	/api/locations	List all locations
 
