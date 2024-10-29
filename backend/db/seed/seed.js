@@ -1,7 +1,6 @@
 const db = require("../connection");
 
 const seed = () => {
-  const seed = () => {
     return (
       db
         .query(`DROP TABLE IF EXISTS event_participants;`)
@@ -39,7 +38,7 @@ const seed = () => {
             `CREATE TABLE participants (
                 participant_id INT PRIMARY KEY AUTO_INCREMENT,
                 name VARCHAR(255) NOT NULL,
-                email VARCHAR(255) NOT NULL UNIQUE
+                email VARCHAR(255) NOT NULL
             );`
           );
         })
@@ -99,7 +98,7 @@ const seed = () => {
         })
     );
   };
-}
+
   
 //   return (
 //     db

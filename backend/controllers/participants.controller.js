@@ -31,7 +31,7 @@ exports.postNewParticipantController = (req, res, next) => {
   db.query(`SELECT * FROM events WHERE event_id = ?`, [event_id])
     .then((eventCheck) => {
       //event check
-      if (!eventCheck || eventCheck.length === 0) {
+      if (!eventCheck[0] || eventCheck[0].length === 0) {
         return res.status(404).json({ msg: "Event not found" });
       }
       return postNewParticipantModel(name, email, event_id);
