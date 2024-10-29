@@ -1,0 +1,18 @@
+@import 'events.css';
+/* @import 'participants.css';
+@import 'locations.css';
+@import 'blacklist.css'; */
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+header {
+    background-color: #de9c10;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
