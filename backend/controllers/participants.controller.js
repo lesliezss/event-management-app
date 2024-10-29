@@ -26,7 +26,6 @@ exports.postNewParticipantController = (req, res, next) => {
   if (!name || !email || !event_id) {
     return res.status(400).send({ msg: "All fields are required" });
   }
-  // console.log("Checking event with ID:", event_id); // Log event_id being checked
 
   db.query(`SELECT * FROM events WHERE event_id = ?`, [event_id])
     .then((eventCheck) => {

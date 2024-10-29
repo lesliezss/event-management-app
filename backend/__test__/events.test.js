@@ -12,7 +12,6 @@ participants
 GET	/api/participants	List all participants
 POST	/api/participants	Create a new participant
 PATCH
-DELETE	/api/participants/:id	Delete a specific participant
 GET  /api/participants/:event_id   filter participants by event
 
 

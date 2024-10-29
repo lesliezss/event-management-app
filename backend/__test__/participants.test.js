@@ -1,9 +1,7 @@
 // participants
 // GET	/api/participants	List all participants
-
 // POST	/api/participants	Create a new participant
-
-// DELETE	/api/participants/:id	Delete a specific participant
+//Patch
 // GET  /api/participants/:event_id   filter participants by event
 
 const app = require("../app");
@@ -83,3 +81,58 @@ describe("POST /api/participants", () => {
       });
   });
 });
+
+describe("PATCH /api/participants/participant_id", () => {
+  test("200 PATCH: updates an existing participant's details and responds with the updated participant", () => {
+    const updatedParticipantDetails = { name: "Updated Name", email: "updatedemail@example.com" };
+    
+    return request(app)
+      .patch("/api/participants/1")
+      .send(updatedParticipantDetails)
+      .expect(200)
+      .then(({ body }) => {
+        const { updatedParticipant } = body;
+        expect(updatedParticipant).toMatchObject({
+          participant_id: 1,
+          name: "Updated Name",
+          email: "updatedemail@example.com",
+        });
+      });
+  });
+  
+  test("status 400: responds with an error message when no updated fields", () => {
+    const updatedParticipantDetails = {};
+    
+    return request(app)
+      .patch("/api/participants/1")
+      .send(updatedParticipantDetails)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("No fields provided to update.");
+      });
+  });
+  test("status 400: responds with an error message when passed an invalid climb id", () => {
+    const updatedParticipantDetails = { name: "Updated Name", email: "updatedemail@example.com" };
+    
+    return request(app)
+      .patch("/api/participants/notAnId")
+      .send(updatedParticipantDetails)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request");
+      });
+  });
+  test("status 404: responds with an error message when passed a climb id that does not in the database", () => {
+    const updatedParticipantDetails = { name: "Updated Name", email: "updatedemail@example.com" };
+    
+    return request(app)
+      .patch("/api/participants/99")
+      .send(updatedParticipantDetails)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("No participant found with id: 99");
+      });
+  });
+});
+
+
