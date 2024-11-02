@@ -1,17 +1,17 @@
-import { fetchEvents } from '../api/eventsApi.js';
 
-export function loadEvents() {
-    fetchEvents().then((events) => {
-        const eventsSection = document.getElementById("events");
-        eventsSection.innerHTML = "<h2>Events Overview</h2>";
-
-        events.forEach((event) => {
-            const eventElement = document.createElement("div");
-            eventElement.className = "event-item";
-            eventElement.innerHTML = `<h3>${event.event_name}</h3>
-                                       <p>Date: ${event.event_date}</p>
-                                       <p>Location ID: ${event.location_id}</p>`;
-            eventsSection.appendChild(eventElement);
-        });
+// Render events in the table
+export function renderEvents(events, eventsTableBody) {
+    eventsTableBody.innerHTML = ''; // Clear previous entries
+    events.forEach(event => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${event.event_name}</td>
+        <td>${new Date(event.event_date).toLocaleDateString()}</td>
+        <td>${event.location_name}</td>
+        <td>${event.guest_number}</td>
+        <td><button class="deleteButton" data-id="${event.event_id}">Delete</button></td>
+      `;
+      eventsTableBody.appendChild(row);
     });
-}
+  }
+  
