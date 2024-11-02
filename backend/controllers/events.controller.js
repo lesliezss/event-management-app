@@ -19,6 +19,7 @@ exports.getAllEvents = (req, res, next) => {
       res.status(200).send({ events });
     })
     .catch((err) => {
+      console.log(err)
       next(err);
     });
 };
@@ -70,7 +71,6 @@ exports.postNewEventController = (req, res, next) => {
     })
     .then((newEvent) => {
       if (newEvent) {
-        console.log(newEvent)
         res.status(201).send({ newEvent });
       }
     })

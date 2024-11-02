@@ -41,6 +41,7 @@ describe("GET /api/events", () => {
         expect(events.length).toBe(3);
         events.forEach((event) => {
           expect(event).toMatchObject({
+            event_id: expect.any(Number),
             event_name: expect.any(String),
             event_date: expect.any(String),
             location_name: expect.any(String),

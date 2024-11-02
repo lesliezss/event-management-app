@@ -1,10 +1,12 @@
 const db = require("../db/connection");
 
 function selectAllEvents() {
+  console.log("in model")
   return db
     .query(
       `
         SELECT
+          events.event_id,
           event_name,
           event_date,
           locations.location_name,
@@ -17,6 +19,7 @@ function selectAllEvents() {
        `
     )
     .then(([results]) => {
+      console.log(results)
       return results;
     });
 }
@@ -51,7 +54,7 @@ function postNewEvent(event_name, event_date, location_id) {
     )
     .then(([result]) => {
       const newEventId = result.insertId; // Get the inserted event's ID
-      
+
       // select the full row from the events table based on the insertId
       return db.query(`SELECT * FROM events WHERE event_id = ?`, [newEventId]);
     })

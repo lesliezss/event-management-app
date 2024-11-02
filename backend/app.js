@@ -1,4 +1,6 @@
 const express = require("express");
+const cors = require('cors');
+
 
 const {
   getAllEvents,
@@ -15,6 +17,8 @@ const {
 const app = express();
 
 app.use(express.json());
+app.use(cors()); // Allow all origins by default (for development)
+
 
 // events endpoints
 
