@@ -1,7 +1,6 @@
 const db = require("../db/connection");
 
 function selectAllEvents() {
-  console.log("in model")
   return db
     .query(
       `
@@ -19,7 +18,6 @@ function selectAllEvents() {
        `
     )
     .then(([results]) => {
-      console.log(results)
       return results;
     });
 }

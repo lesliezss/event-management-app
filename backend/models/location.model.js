@@ -5,6 +5,7 @@ function selectAllLocations() {
     return db
       .query(
         `SELECT 
+      l.location_id,
       l.location_name,
       l.capacity,
       COUNT(ep.participant_id) AS total_guests,

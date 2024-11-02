@@ -20,6 +20,7 @@ describe("GET /api/locations", () => {
         expect(locations.length).toBe(3);
         locations.forEach((location) => {
           expect(location).toMatchObject({
+            location_id: expect.any(Number),
             location_name: expect.any(String),
             capacity: expect.any(Number),
             occupancy_rate: expect.any(String),
