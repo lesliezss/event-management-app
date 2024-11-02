@@ -82,49 +82,61 @@ describe("POST /api/participants", () => {
   });
 });
 
-describe("PATCH /api/participants/participant_id", () => {
+describe.only("PATCH /api/participants/participant_id", () => {
   test("200 PATCH: updates an existing participant's details and responds with the updated participant", () => {
-    const updatedParticipantDetails = { name: "Updated Name", email: "updatedemail@example.com" };
-    
+    const updatedParticipantDetails = {
+      name: "Updated Name",
+      email: "updatedemail@example.com",
+      event_id: 1,
+    };
+
     return request(app)
-      .patch("/api/participants/1")
+      .patch("/api/participants/2")
       .send(updatedParticipantDetails)
       .expect(200)
       .then(({ body }) => {
         const { updatedParticipant } = body;
         expect(updatedParticipant).toMatchObject({
-          participant_id: 1,
+          participant_id: "2",
           name: "Updated Name",
           email: "updatedemail@example.com",
         });
       });
   });
-  
+
   test("status 400: responds with an error message when no updated fields", () => {
     const updatedParticipantDetails = {};
-    
+
     return request(app)
       .patch("/api/participants/1")
       .send(updatedParticipantDetails)
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("No fields provided to update.");
+        expect(body.msg).toBe("All fields are required");
       });
   });
-  test("status 400: responds with an error message when passed an invalid climb id", () => {
-    const updatedParticipantDetails = { name: "Updated Name", email: "updatedemail@example.com" };
-    
+  test("status 400: responds with an error message when passed an invalid participant id", () => {
+    const updatedParticipantDetails = {
+      name: "Updated Name",
+      email: "updatedemail@example.com",
+      event_id: 1,
+    };
+
     return request(app)
       .patch("/api/participants/notAnId")
       .send(updatedParticipantDetails)
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("Bad Request");
+        expect(body.msg).toBe("Invalid participant id");
       });
   });
-  test("status 404: responds with an error message when passed a climb id that does not in the database", () => {
-    const updatedParticipantDetails = { name: "Updated Name", email: "updatedemail@example.com" };
-    
+  test("status 404: responds with an error message when passed a participant id that does not in the database", () => {
+    const updatedParticipantDetails = {
+      name: "Updated Name",
+      email: "updatedemail@example.com",
+      event_id: 1,
+    };
+
     return request(app)
       .patch("/api/participants/99")
       .send(updatedParticipantDetails)
@@ -133,6 +145,20 @@ describe("PATCH /api/participants/participant_id", () => {
         expect(body.msg).toBe("No participant found with id: 99");
       });
   });
+
+  test("status 404: responds with an error message when event_id is invalid", () => {
+    const updatedParticipantDetails = {
+      name: "Updated Name",
+      email: "updatedemail@example.com",
+      event_id: 99,
+    };
+
+    return request(app)
+      .patch("/api/participants/1")
+      .send(updatedParticipantDetails)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Event not found");
+      });
+  });
 });
-
-

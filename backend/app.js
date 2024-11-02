@@ -1,6 +1,5 @@
 const express = require("express");
-const cors = require('cors');
-
+const cors = require("cors");
 
 const {
   getAllEvents,
@@ -12,13 +11,13 @@ const { getAllLocations } = require("./controllers/location.controller");
 const {
   getAllParticipants,
   postNewParticipantController,
+  patchParticipant,
 } = require("./controllers/participants.controller");
 
 const app = express();
 
 app.use(express.json());
 app.use(cors()); // Allow all origins by default (for development)
-
 
 // events endpoints
 
@@ -35,6 +34,7 @@ app.get("/api/locations", getAllLocations);
 
 app.get("/api/participants", getAllParticipants);
 app.post("/api/participants", postNewParticipantController);
+app.patch("/api/participants/:participant_id", patchParticipant);
 
 //mysql errors
 app.use((err, req, res, next) => {

@@ -51,24 +51,28 @@ async function postNewParticipantModel(name, email, event_id) {
   }
 }
 
-function updateParticipantDetailsAndEvent(participantId, name, email, eventId) {
+function updateParticipant(name, email, event_id, participant_id) {
   return db
     .query(
       `UPDATE participants 
        SET name = ?, email = ? 
        WHERE participant_id = ?`,
-      [name, email, participantId]
+      [name, email, participant_id]
     )
     .then(([result]) => {
+
       if (result.affectedRows === 0) {
-        throw { status: 404, msg: "Participant not found" };
+        throw {
+          status: 404,
+          msg: `No participant found with id: ${participant_id}`,
+        };
       }
 
       return db.query(
         `UPDATE event_participants 
          SET event_id = ? 
          WHERE participant_id = ?`,
-        [eventId, participantId]
+        [event_id, participant_id]
       );
     })
     .then(([result]) => {
@@ -77,10 +81,9 @@ function updateParticipantDetailsAndEvent(participantId, name, email, eventId) {
       }
 
       return {
-        participant_id: participantId,
+        participant_id: participant_id,
         name,
         email,
-        event_id: eventId,
       };
     });
 }
@@ -88,5 +91,5 @@ function updateParticipantDetailsAndEvent(participantId, name, email, eventId) {
 module.exports = {
   selectAllParticipants,
   postNewParticipantModel,
-  updateParticipantDetailsAndEvent,
+  updateParticipant,
 };
