@@ -53,7 +53,6 @@
             <input type="date" id="eventDate" required />
             <select id="locationSelect"></select>
 
-            
             <button type="submit">Add Event</button>
           </form>
         </div>
@@ -61,7 +60,50 @@
         <script type="module" src="./js/components/events.js"></script>
       </section>
 
-      <section id="participants"></section>
+
+      <section id="participants">
+        <div id="app">
+          <h1>Participants Overview</h1>
+
+          <!-- Participants Table -->
+          <table id="participantsTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Event</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="participantsTableBody">
+              <!-- Participant rows will be inserted here -->
+            </tbody>
+          </table>
+
+          <!-- New Participant Form -->
+          <h2>Add New Participant</h2>
+          <form id="newParticipantForm">
+            <input
+              type="text"
+              id="participantName"
+              placeholder="Participant Name"
+              required
+            />
+            <input
+              type="email"
+              id="participantEmail"
+              placeholder="Participant Email"
+              required
+            />
+            <select id="eventSelect" required></select>
+            <button type="submit">Add Participant</button>
+          </form>
+
+          
+        </div>
+        <script type="module" src="./js/api/participantsApi.js"></script>
+        <script type="module" src="./js/components/participants.js"></script>
+      </section>
       <section id="locations"></section>
       <section id="blacklist"></section>
     </main>

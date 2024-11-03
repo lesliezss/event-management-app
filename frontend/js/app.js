@@ -7,6 +7,9 @@ import {
 } from "./api/eventsApi.js";
 import { renderEvents } from "./components/events.js";
 
+
+// EVENTS
+
 document.addEventListener("DOMContentLoaded", async () => {
   const eventsTableBody = document.getElementById("eventsTableBody");
   const searchInput = document.getElementById("searchInput");
@@ -81,3 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 });
+
+
+// PARTICIPANTS
+
