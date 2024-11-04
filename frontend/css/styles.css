@@ -129,20 +129,25 @@ main {
 
 #newEventForm input,
 #newEventForm select,
-#newEventForm button {
+#newEventForm button,
+#newParticipantForm input,
+#newParticipantForm select,
+#newParticipantForm button {
     padding: 0.5rem;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
 
-#newEventForm button {
-    background-color: #4CAF50;
+#newEventForm button,
+#newParticipantForm button {
+    background-color: #4CAF50; 
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-#newEventForm button:hover {
+#newEventForm button:hover,
+#newParticipantForm button:hover {
     background-color: #45a049;
 }
 
