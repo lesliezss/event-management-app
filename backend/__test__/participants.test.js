@@ -1,7 +1,8 @@
 // participants
 // GET	/api/participants	List all participants
 // POST	/api/participants	Create a new participant
-//Patch
+//Patch /api/participants/:participant_id
+
 // GET  /api/participants/:event_id   filter participants by event
 
 const app = require("../app");
@@ -23,6 +24,7 @@ describe("GET /api/participants", () => {
         expect(participants.length).toBeGreaterThan(0);
         participants.forEach((participant) => {
           expect(participant).toMatchObject({
+            participant_id: expect.any(Number),
             name: expect.any(String),
             email: expect.any(String),
             event_name: expect.any(String),
@@ -82,7 +84,7 @@ describe("POST /api/participants", () => {
   });
 });
 
-describe.only("PATCH /api/participants/participant_id", () => {
+describe("PATCH /api/participants/participant_id", () => {
   test("200 PATCH: updates an existing participant's details and responds with the updated participant", () => {
     const updatedParticipantDetails = {
       name: "Updated Name",
@@ -159,6 +161,41 @@ describe.only("PATCH /api/participants/participant_id", () => {
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("Event not found");
+      });
+  });
+});
+
+describe("GET api/participants/:event_id", () => {
+  test.only("200 GET: response with an array of partiipants at a event", () => {
+    return request(app)
+      .get("/api/participants/1")
+      .expect(200)
+      .then(({ body }) => {
+        const { participants } = body;
+        expect(participants.length).toBe(2);
+        participants.forEach((participant) => {
+          expect(participant).toMatchObject({
+            event_id: expect.any(Number),
+            name: expect.any(String),
+            email: expect.any(String),
+          });
+        });
+      });
+  });
+  test("status:400, responds with an error message when passed a bad session ID", () => {
+    return request(app)
+      .get("/api/climbs/notAnId")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request");
+      });
+  });
+  test("status 404, responds with an error message when passed a session_id that's not in the database", () => {
+    return request(app)
+      .get("/api/climbs/999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("No climbs found for session_id: 999");
       });
   });
 });

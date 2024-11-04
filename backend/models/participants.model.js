@@ -4,7 +4,7 @@ function selectAllParticipants() {
   return db
     .query(
       `
-        SELECT participants.name, participants.email, events.event_name
+        SELECT participants.participant_id, participants.name, participants.email, events.event_name
         FROM participants
         LEFT JOIN event_participants ON participants.participant_id = event_participants.participant_id
         LEFT JOIN events ON event_participants.event_id = events.event_id
@@ -79,17 +79,25 @@ function updateParticipant(name, email, event_id, participant_id) {
       if (result.affectedRows === 0) {
         throw { status: 404, msg: "Participant-event association not found" };
       }
-
+     
       return {
         participant_id: participant_id,
         name,
         email,
       };
-    });
+    })}
+
+
+function selectParticipantsByEvent (event_id){
+return db.query(`
+  SELECT 
+  `)
 }
+
 
 module.exports = {
   selectAllParticipants,
   postNewParticipantModel,
   updateParticipant,
+  selectParticipantsByEvent
 };
