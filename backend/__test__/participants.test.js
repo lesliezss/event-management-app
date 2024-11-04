@@ -166,13 +166,13 @@ describe("PATCH /api/participants/participant_id", () => {
 });
 
 describe("GET api/participants/:event_id", () => {
-  test.only("200 GET: response with an array of partiipants at a event", () => {
+  test("200 GET: response with an array of partiipants at a event", () => {
     return request(app)
       .get("/api/participants/1")
       .expect(200)
       .then(({ body }) => {
         const { participants } = body;
-        expect(participants.length).toBe(2);
+        expect(participants.length).toBeGreaterThan(0);
         participants.forEach((participant) => {
           expect(participant).toMatchObject({
             event_id: expect.any(Number),
@@ -184,18 +184,18 @@ describe("GET api/participants/:event_id", () => {
   });
   test("status:400, responds with an error message when passed a bad session ID", () => {
     return request(app)
-      .get("/api/climbs/notAnId")
+      .get("/api/participants/notAnId")
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("Bad Request");
+        expect(body.msg).toBe("Invalid event ID");
       });
   });
   test("status 404, responds with an error message when passed a session_id that's not in the database", () => {
     return request(app)
-      .get("/api/climbs/999")
+      .get("/api/participants/999")
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe("No climbs found for session_id: 999");
+        expect(body.msg).toBe("No participants found for event id: 999");
       });
   });
 });

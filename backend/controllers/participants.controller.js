@@ -1,7 +1,8 @@
 const {
   selectAllParticipants,
   postNewParticipantModel,
-  updateParticipant
+  updateParticipant,
+  selectParticipantsByEvent,
 } = require("../models/participants.model");
 const db = require("../db/connection");
 
@@ -46,9 +47,9 @@ exports.postNewParticipantController = (req, res, next) => {
     });
 };
 
-exports.patchParticipant = (req, res, next) =>{
-  const {name, email, event_id} = req.body
-  const {participant_id} = req.params
+exports.patchParticipant = (req, res, next) => {
+  const { name, email, event_id } = req.body;
+  const { participant_id } = req.params;
 
   if (isNaN(Number(participant_id))) {
     return res.status(400).send({ msg: "Invalid participant id" });
@@ -58,19 +59,39 @@ exports.patchParticipant = (req, res, next) =>{
     return res.status(400).send({ msg: "All fields are required" });
   }
   db.query(`SELECT * FROM events WHERE event_id = ?`, [event_id])
-  .then((eventCheck)=>{
-    //event check
-    if (!eventCheck[0] || eventCheck[0].length === 0) {
-      return res.status(404).json({ msg: "Event not found" });
-    }
-    return updateParticipant(name, email, event_id, participant_id)
-  })
-  .then((updatedParticipant) => {
-    if (updatedParticipant) {
-      res.status(200).send({ updatedParticipant });
-    }
-  })
-  .catch((err) => {
-    next(err);
-  });
-}
+    .then((eventCheck) => {
+      //event check
+      if (!eventCheck[0] || eventCheck[0].length === 0) {
+        return res.status(404).json({ msg: "Event not found" });
+      }
+      return updateParticipant(name, email, event_id, participant_id);
+    })
+    .then((updatedParticipant) => {
+      if (updatedParticipant) {
+        res.status(200).send({ updatedParticipant });
+      }
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.getParticipantsByEvent = (req, res, next) => {
+  const { event_id } = req.params;
+  if (!event_id || isNaN(event_id)) {
+    return res.status(400).send({ msg: 'Invalid event ID' });
+  }
+  return selectParticipantsByEvent(event_id)
+    .then((participants) => {
+      if (participants.length === 0) {
+        res.status(404).send({msg:`No participants found for event id: ${event_id}`})
+      } else {
+        res.status(200).send({ participants });
+      }
+    })
+
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+};

@@ -12,6 +12,7 @@ const {
   getAllParticipants,
   postNewParticipantController,
   patchParticipant,
+  getParticipantsByEvent
 } = require("./controllers/participants.controller");
 
 const app = express();
@@ -35,6 +36,7 @@ app.get("/api/locations", getAllLocations);
 app.get("/api/participants", getAllParticipants);
 app.post("/api/participants", postNewParticipantController);
 app.patch("/api/participants/:participant_id", patchParticipant);
+app.get("/api/participants/:event_id", getParticipantsByEvent)
 
 //mysql errors
 app.use((err, req, res, next) => {

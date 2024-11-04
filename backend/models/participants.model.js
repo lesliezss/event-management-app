@@ -90,8 +90,14 @@ function updateParticipant(name, email, event_id, participant_id) {
 
 function selectParticipantsByEvent (event_id){
 return db.query(`
-  SELECT 
-  `)
+  SELECT participants.participant_id, participants.name, participants.email, event_participants.event_id
+  FROM participants
+  INNER JOIN event_participants
+  ON participants.participant_id = event_participants.participant_id
+  WHERE event_participants.event_id = ?`, [event_id])
+  .then(([result])=>{
+    return result
+  })
 }
 
 
