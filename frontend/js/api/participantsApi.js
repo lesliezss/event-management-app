@@ -40,3 +40,11 @@ const API_BASE_URL =
         return await response.json();
       }
       
+      export async function fetchParticipantsByEvent(eventId) {
+        const response = await fetch(`${API_BASE_URL}/participants/${eventId}`);
+        if (!response.ok) {
+          throw new Error(`Error fetching participants for event ${eventId}`);
+        }
+        const data = await response.json();
+        return data.participants;
+      }

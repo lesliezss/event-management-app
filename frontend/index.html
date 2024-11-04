@@ -64,6 +64,10 @@
       <section id="participants">
         <div id="app">
           <h1>Participants Overview</h1>
+          <label for="eventFilter">Filter by Event:</label>
+          <select id="eventFilter">
+            <option value="">Select an event</option>
+          </select>
 
           <!-- Participants Table -->
           <table id="participantsTable">
@@ -95,7 +99,9 @@
               placeholder="Participant Email"
               required
             />
-            <select id="eventSelect" required></select>
+            <select id="eventSelect" required>
+              <option value="" disabled selected>Select an event</option>
+            </select>
             <button type="submit">Add Participant</button>
           </form>
 

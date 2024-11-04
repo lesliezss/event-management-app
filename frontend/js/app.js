@@ -6,9 +6,13 @@ import {
   fetchLocations,
 } from "./api/eventsApi.js";
 import { renderEvents } from "./components/events.js";
-import { fetchParticipants, addParticipant, updateParticipant } from './api/participantsApi.js'
-import { renderParticipants, populateEventDropdown } from './components/participants.js';
 
+import { fetchParticipants, addParticipant } from "./api/participantsApi.js";
+import {
+  renderParticipants,
+  populateEventDropdowns,
+  initializeFiltering,
+} from "./components/participants.js";
 
 // EVENTS
 
@@ -87,36 +91,40 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
-
 // PARTICIPANTS
 
 // Load participants and render them in the table
-async function loadParticipants() {
+export async function loadParticipants() {
   try {
-    const participants = await fetchParticipants();
-    const participantsTableBody = document.getElementById('participantsTableBody');
+    const { participants } = await fetchParticipants();
+    const participantsTableBody = document.getElementById(
+      "participantsTableBody"
+    );
     renderParticipants(participants, participantsTableBody);
   } catch (error) {
-    console.error('Error loading participants:', error);
+    console.error("Error loading participants:", error);
   }
 }
 
 // Handle "Add New Participant" form submission
-document.getElementById('newParticipantForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const name = document.getElementById('participantName').value;
-  const email = document.getElementById('participantEmail').value;
-  const eventId = document.getElementById('eventSelect').value;
+document
+  .getElementById("newParticipantForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("participantName").value;
+    const email = document.getElementById("participantEmail").value;
+    const eventId = document.getElementById("eventSelect").value;
 
-  try {
-    await addParticipant({ name, email, event_id: eventId });
-    loadParticipants(); // Reload participants after adding a new one
-    document.getElementById('newParticipantForm').reset(); // Clear the form
-  } catch (error) {
-    console.error('Error adding participant:', error);
-  }
-});
+    try {
+      await addParticipant({ name, email, event_id: eventId });
+      loadParticipants(); // Reload participants after adding a new one
+      document.getElementById("newParticipantForm").reset(); // Clear the form
+    } catch (error) {
+      console.error("Error adding participant:", error);
+    }
+  });
 
 // Initialize the participants table and dropdown on page load
 loadParticipants();
-populateEventDropdown();
+populateEventDropdowns();
+initializeFiltering(); // Initialize event filtering
