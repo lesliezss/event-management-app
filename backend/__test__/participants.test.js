@@ -2,7 +2,6 @@
 // GET	/api/participants	List all participants
 // POST	/api/participants	Create a new participant
 //Patch /api/participants/:participant_id
-
 // GET  /api/participants/:event_id   filter participants by event
 
 const app = require("../app");
@@ -176,6 +175,7 @@ describe("GET api/participants/:event_id", () => {
         participants.forEach((participant) => {
           expect(participant).toMatchObject({
             event_id: expect.any(Number),
+            event_name: expect.any(String),
             name: expect.any(String),
             email: expect.any(String),
           });

@@ -4,22 +4,6 @@ GET	/api/events	List all events
 GET /api/events/search' search by event name
 POST	/api/events	Create a new event
 DELETE	/api/events/:id	Delete a specific event
-
-locations
-GET	/api/locations	List all locations
-
-participants
-GET	/api/participants	List all participants
-POST	/api/participants	Create a new participant
-PATCH
-GET  /api/participants/:event_id   filter participants by event
-
-
-blacklist
-POST	/api/blacklist	Add an IP to the blacklist
-DELETE	/api/blacklist/:ip	Remove an IP from the blacklist
-GET	/api/blacklist	Get a list of all blacklisted IPs
-POST	/api/whitelist	Add an IP to the whitelist
 */
 
 const app = require("../app");
