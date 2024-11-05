@@ -60,7 +60,6 @@
         <script type="module" src="./js/components/events.js"></script>
       </section>
 
-
       <section id="participants">
         <div id="app">
           <h1>Participants Overview</h1>
@@ -104,8 +103,6 @@
             </select>
             <button type="submit">Add Participant</button>
           </form>
-
-          
         </div>
         <script type="module" src="./js/api/participantsApi.js"></script>
         <script type="module" src="./js/components/participants.js"></script>
@@ -114,22 +111,48 @@
         <div>
           <h2>Location Information</h2>
           <table id="locationsTable">
-              <thead>
-                  <tr>
-                      <th>Location</th>
-                      <th>Occupancy Rate</th>
-                      <th>Guest to Capacity</th>
-                  </tr>
-              </thead>
-              <tbody id="locationsTableBody">
-                  <!-- Location data will be populated here -->
-              </tbody>
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>Occupancy Rate</th>
+                <th>Guest to Capacity</th>
+              </tr>
+            </thead>
+            <tbody id="locationsTableBody">
+              <!-- Location data will be populated here -->
+            </tbody>
           </table>
-      </div>
-      <script type="module" src="./js/api/locationsApi.js"></script>
+        </div>
+        <script type="module" src="./js/api/locationsApi.js"></script>
         <script type="module" src="./js/components/locations.js"></script>
       </section>
-      <section id="blacklist"></section>
+      <section id="blacklist">
+        <div>
+          <h2>Blacklist Management</h2>
+          <table id="blacklistTable">
+            <thead>
+              <tr>
+                <th>Blocked IP</th>
+                <th>Blocked At</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <h2>Add IP to Blacklist</h2>
+          <form id = "newBlacklistForm">
+            <input
+              type="text"
+              id="ipInput"
+              placeholder="Enter IP Address"
+              required
+            />
+            <button id="addIpButton">Add to Blacklist</button>
+          </form>
+
+          <script type="module" src="./js/components/blacklist.js"></script>
+        </div>
+      </section>
     </main>
   </body>
 </html>

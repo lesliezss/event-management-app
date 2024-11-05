@@ -13,8 +13,7 @@ import {
   populateEventDropdowns,
   initializeFiltering,
 } from "./components/participants.js";
-import { initLocations } from './components/locations.js'; // Adjust the path as necessary
-
+import { initLocations } from "./components/locations.js"; // Adjust the path as necessary
 
 // EVENTS
 
@@ -122,7 +121,6 @@ document
       loadParticipants(); // Reload participants after adding a new one
       document.getElementById("newParticipantForm").reset(); // Clear the form
       await initLocations(); // Fetch and update locations after adding a participant
-
     } catch (error) {
       console.error("Error adding participant:", error);
     }
@@ -132,5 +130,4 @@ document
 loadParticipants();
 populateEventDropdowns();
 initializeFiltering(); // Initialize event filtering
-
-initLocations()
+initLocations(); //locations

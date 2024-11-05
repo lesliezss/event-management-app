@@ -45,18 +45,18 @@ main {
 
 /* Section */
 #events,
-#participants, #locations {
+#participants, #locations, #blacklist {
   background-color: #fff;
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 /* Add margin between sections */
-#events,#participants, #locations  {
+#events,#participants, #locations, #blacklist  {
   margin-bottom: 20px; /* Space below the events section */
 }
 
-#participants, #locations  {
+#participants, #locations, #blacklist  {
   margin-top: 20px; /* Space above the participants section */
 }
 
@@ -92,7 +92,8 @@ main {
 /* Table Styling */
 #event-table,
 #participantsTable,
-#locationsTable {
+#locationsTable,
+#blacklistTable {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1.5rem;
@@ -103,7 +104,9 @@ main {
 #participantsTable th,
 #participantsTable td,
 #locationsTable th,
-#locationsTable td {
+#locationsTable td,
+#blacklistTable th,
+#blacklistTable td {
   padding: 0.75rem;
   border: 1px solid #ddd;
   text-align: center;
@@ -111,14 +114,16 @@ main {
 
 #event-table th,
 #participantsTable th,
-#locationsTable th {
+#locationsTable th,
+#blacklistTable th {
   background-color: #f2f2f2;
   font-weight: bold;
 }
 
 #event-table tr:nth-child(even),
 #participantsTable tr:nth-child(even),
-#locationsTable tr:nth-child(even){
+#locationsTable tr:nth-child(even),
+#blacklistTable tr:nth-child(even){
   background-color: #f9f9f9;
 }
 
@@ -129,7 +134,8 @@ main {
 
 /* Form Styling */
 #newEventForm,
-#newParticipantForm {
+#newParticipantForm,
+#newBlacklistForm {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -141,13 +147,17 @@ main {
 #newEventForm button,
 #newParticipantForm input,
 #newParticipantForm select,
-#newParticipantForm button {
+#newParticipantForm button,
+#newBlacklistForm input,
+#newBlacklistForm button{
   padding: 0.5rem;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
 #newEventForm button,
+#newParticipantForm button,
+#newBlacklistForm button,
 #newParticipantForm button {
   background-color: #4caf50;
   color: #fff;
@@ -156,7 +166,8 @@ main {
 }
 
 #newEventForm button:hover,
-#newParticipantForm button:hover {
+#newParticipantForm button:hover,
+#newBlacklistForm button:hover {
   background-color: #45a049;
 }
 
