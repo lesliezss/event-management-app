@@ -12,9 +12,13 @@ const {
   getAllParticipants,
   postNewParticipantController,
   patchParticipant,
-  getParticipantsByEvent
+  getParticipantsByEvent,
 } = require("./controllers/participants.controller");
-
+const {
+  addIpToBlacklist,
+  getBlacklist,
+  removeIpFromBlacklist,
+} = require("./controllers/blacklist");
 const app = express();
 
 app.use(express.json());
@@ -36,7 +40,12 @@ app.get("/api/locations", getAllLocations);
 app.get("/api/participants", getAllParticipants);
 app.post("/api/participants", postNewParticipantController);
 app.patch("/api/participants/:participant_id", patchParticipant);
-app.get("/api/participants/:event_id", getParticipantsByEvent)
+app.get("/api/participants/:event_id", getParticipantsByEvent);
+
+// blacklist endpoints
+app.post("/api/blacklist", addIpToBlacklist); // Add IP to blacklist
+app.get("/api/blacklist", getBlacklist); // Get all blacklisted IPs
+app.delete("/api/blacklist/:ip_address", removeIpFromBlacklist);
 
 //mysql errors
 app.use((err, req, res, next) => {
