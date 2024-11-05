@@ -140,16 +140,16 @@
             <tbody></tbody>
           </table>
           <h2>Add IP to Blacklist</h2>
-          <form id = "newBlacklistForm">
+          <form id="newBlacklistForm">
             <input
               type="text"
               id="ipInput"
               placeholder="Enter IP Address"
               required
             />
-            <button id="addIpButton">Add to Blacklist</button>
+            <button type="submit" id="addIpButton">Add to Blacklist</button>
           </form>
-
+          <script type="module" src="./js/api/blacklistApi.js"></script>
           <script type="module" src="./js/components/blacklist.js"></script>
         </div>
       </section>
