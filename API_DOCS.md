@@ -6,25 +6,28 @@
 - **Example Response**:
   ```json
   [
-        {
-          event_name: 'Tech meeting',
-          event_date: 2024-10-19T23:00:00.000Z,
-          location_name: 'Meeting Room 1',
-          guest_number: 2
-        },
-        {
-          event_name: 'Music festival',
-          event_date: 2024-11-15T00:00:00.000Z,
-          location_name: 'Meeting Room 1',
-          guest_number: 1
-        },
-        {
-          event_name: 'Art Sales',
-          event_date: 2024-12-01T00:00:00.000Z,
-          location_name: 'Meeting Room 2',
-          guest_number: 1
-        }
-      ]
+      {
+        event_id: 1,
+        event_name: 'Tech meeting',
+        event_date: 2024-12-20T00:00:00.000Z,
+        location_name: 'Meeting Room 1',
+        guest_number: 5
+      },
+      {
+        event_id: 2,
+        event_name: 'Music festival',
+        event_date: 2025-01-15T00:00:00.000Z,
+        location_name: 'Activity Centre',
+        guest_number: 1
+      },
+      {
+        event_id: 3,
+        event_name: 'Art Sales',
+        event_date: 2024-12-01T00:00:00.000Z,
+        location_name: 'Meeting Room 2',
+        guest_number: 1
+      }
+    ]
   ```
 ### GET /api/events/search
 - **Description**: response with an array of matching events
@@ -172,5 +175,77 @@
       name: 'New Participants',
       email: 'new@example.com'
     }
+    ]
+  ```
+  ### PATCH /api/participants/participant_id
+- **Description**: update a participant, response with the updated participant
+ **Parameters**:
+  - `name` 
+  - `email`
+  - `event_id`
+- **Example Request**:
+  - **Method**: PATCH
+  - **URL**: `https://your-api-domain.com/api/participants/participant_id`
+- **Example Response**:
+  ```json
+  [
+      {
+      participant_id: 7,
+      name: 'New Participants',
+      email: 'new@example.com'
+    }
+    ]
+  ```
+
+    ### GET /api/participants/event_id
+- **Description**: response with an array of partiipants at a event
+- **Example Request**:
+  - **Method**: GET
+  - **URL**: `https://your-api-domain.com/api/participants/event_id`
+- **Example Response**:
+  ```json
+  [
+      {
+        participant_id: 1,
+        name: 'John Doe',
+        email: 'john@example.com',
+        event_id: 1
+      },
+      {
+        participant_id: 2,
+        name: 'Jane Smith',
+        email: 'jane@example.com',
+        event_id: 1
+      },
+      {
+        participant_id: 3,
+        name: 'Alice Johnson',
+        email: 'alice@example.com',
+        event_id: 1
+      },
+      {
+        participant_id: 3,
+        name: 'Alice Johnson',
+        email: 'alice@example.com',
+        event_id: 2
+      },
+      {
+        participant_id: 4,
+        name: 'Bob Brown',
+        email: 'bob@example.com',
+        event_id: 3
+      },
+      {
+        participant_id: 5,
+        name: 'Leslie Zhan',
+        email: 'lesliezhan@example.com',
+        event_id: 1
+      },
+      {
+        participant_id: 6,
+        name: 'abc def',
+        email: 'abcdef@example.com',
+        event_id: 1
+      }
     ]
   ```
