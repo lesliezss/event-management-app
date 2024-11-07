@@ -19,10 +19,35 @@ const {
   getBlacklist,
   removeIpFromBlacklist,
 } = require("./controllers/blacklist");
+const { isBlacklistedModel } = require("./models/blacklist");
 const app = express();
 
 app.use(express.json());
 app.use(cors()); // Allow all origins by default (for development)
+
+// Blacklist check middleware
+const checkBlacklist = async (req, res, next) => {
+  const clientIp = req.headers["x-forwarded-for"] || req.ip; // Fallback to req.ip if no proxy
+
+  try {
+    const isBlacklisted = await isBlacklistedModel(clientIp);
+
+    if (isBlacklisted) {
+      // If IP is blacklisted, respond with a 403 Forbidden error
+      return res
+        .status(403)
+        .json({ error: "Access denied. Your IP is blacklisted." });
+    }
+
+    // If IP is not blacklisted, proceed to the next middleware or route handler
+    next();
+  } catch (err) {
+    console.error("Error checking blacklist:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+app.use(checkBlacklist); // Applies the blacklist check to all routes
 
 // events endpoints
 
